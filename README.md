@@ -15,7 +15,7 @@ As part of this implementation, an acquiring bank gets simulated in order to all
 The purpose of this project is to demonstrate how a payment processing service, validates incoming requests, interacts with a downstream bank and returns safe masked payment information.
 
 ## Tech Stack
-- **Java 17:** Core programming language
+- **Java 17**
 - **Spring Boot** 
 - **Gradle** 
 - **Lombok** 
