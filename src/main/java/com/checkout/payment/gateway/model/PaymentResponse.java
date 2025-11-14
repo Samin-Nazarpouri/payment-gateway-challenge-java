@@ -1,12 +1,17 @@
 package com.checkout.payment.gateway.model;
 
 import com.checkout.payment.gateway.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
 
-public class GetPaymentResponse {
+public class PaymentResponse {
   private UUID id;
   private PaymentStatus status;
-  private int cardNumberLastFour;
+  @JsonProperty("lastFourDigits")
+  private String lastFourDigits;
+  @JsonIgnore
+  private String cardExpiryDate;
   private int expiryMonth;
   private int expiryYear;
   private String currency;
@@ -28,12 +33,20 @@ public class GetPaymentResponse {
     this.status = status;
   }
 
-  public int getCardNumberLastFour() {
-    return cardNumberLastFour;
+  public String getLastFourDigits() {
+    return lastFourDigits;
   }
 
-  public void setCardNumberLastFour(int cardNumberLastFour) {
-    this.cardNumberLastFour = cardNumberLastFour;
+  public void setLastFourDigits(String lastFourDigits) {
+    this.lastFourDigits = lastFourDigits;
+  }
+
+  public String getCardExpiryDate() {
+    return cardExpiryDate;
+  }
+
+  public void setCardExpiryDate(String cardExpiryDate) {
+    this.cardExpiryDate = cardExpiryDate;
   }
 
   public int getExpiryMonth() {
@@ -70,10 +83,11 @@ public class GetPaymentResponse {
 
   @Override
   public String toString() {
-    return "GetPaymentResponse{" +
+    return "PaymentResponse{" +
         "id=" + id +
         ", status=" + status +
-        ", cardNumberLastFour=" + cardNumberLastFour +
+        ", lastFourDigits='" + lastFourDigits + '\'' +
+        ", cardExpiryDate='" + cardExpiryDate + '\'' +
         ", expiryMonth=" + expiryMonth +
         ", expiryYear=" + expiryYear +
         ", currency='" + currency + '\'' +
