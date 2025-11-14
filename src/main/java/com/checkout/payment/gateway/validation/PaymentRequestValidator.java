@@ -108,9 +108,9 @@ public class PaymentRequestValidator {
       return "Expiry year" + expiryYear
           + " is in the past; This must be a future year (current year: " + currentYear + ")";
     }
-    if (expiryYear == currentYear && expiryMonth < currentMonth) {
-      return "Expiry date is in the past: " + expiryMonth + "/" + expiryYear + " (current date: "
-              + currentMonth + "/" + currentYear + ")";
+    if (expiryYear == currentYear && expiryMonth <= currentMonth) {
+      return "Expiry date is not in the future: " + expiryMonth + "/" + expiryYear + " (current date: "
+          + currentMonth + "/" + currentYear + ")";
     }
     return null;
   }
@@ -120,15 +120,15 @@ public class PaymentRequestValidator {
       return "Currency is required but was null/empty";
     }
     String currencyCode = currency.trim().toUpperCase(Locale.ROOT);
-    
+
     // Currency must be exactly 3 characters
     if (currencyCode.length() != 3) {
-      return "Currency length is invalid: " + currencyCode.length() 
+      return "Currency length is invalid: " + currencyCode.length()
           + " characters (Currency must be exactly 3 characters)";
     }
 
     if (!VALID_CURRENCIES.contains(currencyCode)) {
-      return "Currency is not supported: " + currencyCode 
+      return "Currency is not supported: " + currencyCode
           + " (supported currencies are: " + String.join(", ", VALID_CURRENCIES) + ")";
     }
     return null;

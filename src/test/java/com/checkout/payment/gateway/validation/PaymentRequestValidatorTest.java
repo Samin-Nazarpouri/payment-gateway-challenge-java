@@ -146,7 +146,36 @@ class PaymentRequestValidatorTest {
 
     assertNotNull(result);
     assertTrue(result.contains("Expiry date"));
-    assertTrue(result.contains("past"));
+    assertTrue(result.contains("not in the future"));
+  }
+
+  @Test
+  void testValidateExpiryDateWithCurrentMonth_ShouldReturnError() {
+    int currentYear = YearMonth.now().getYear();
+    int currentMonth = YearMonth.now().getMonthValue();
+    validRequest.setExpiryYear(currentYear);
+    validRequest.setExpiryMonth(currentMonth);
+
+    String result = validator.validatePaymentRequest(validRequest);
+
+    assertNotNull(result);
+    assertTrue(result.contains("Expiry date"));
+    assertTrue(result.contains("not in the future"));
+  }
+
+  @Test
+  void testValidatingExpiryDateWithNextMonthInCurrentYear_ShouldReturnNull() {
+    int currentYear = YearMonth.now().getYear();
+    int currentMonth = YearMonth.now().getMonthValue();
+    int nextMonth = (currentMonth % 12) + 1;
+    int year = currentMonth == 12 ? currentYear + 1 : currentYear;
+    
+    validRequest.setExpiryYear(year);
+    validRequest.setExpiryMonth(nextMonth);
+
+    String result = validator.validatePaymentRequest(validRequest);
+
+    assertNull(result);
   }
 
   @Test
